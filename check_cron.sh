@@ -30,6 +30,6 @@ else
     (crontab -l | grep -F "59 */3 * * * $PM2_PATH resurrect >> /home/$(whoami)/pm2_resurrect.log 2>&1") || (crontab -l; echo "59 */3 * * * $PM2_PATH resurrect >> /home/$(whoami)/pm2_resurrect.log 2>&1") | crontab -
     (crontab -l | grep -F "@reboot $PM2_PATH resurrect >> /home/$(whoami)/pm2_resurrect.log 2>&1") || (crontab -l; echo "@reboot $PM2_PATH resurrect >> /home/$(whoami)/pm2_resurrect.log 2>&1") | crontab -
     (crontab -l | grep -F "@reboot pkill -kill -u $(whoami) && ${CRON_S5}") || (crontab -l; echo "@reboot pkill -kill -u $(whoami) && ${CRON_S5}") | crontab -
-    (crontab -l | grep -F "* * pgrep -x \"s5\" > /dev/null || ${CRON_S5}") || (crontab -l; echo "*/52 * * * * pgrep -x \"s5\" > /dev/null || ${CRON_S5}") | crontab -
+    (crontab -l | grep -F "* * pgrep -x \"s5\" > /dev/null || ${CRON_S5}") || (crontab -l; echo "52 */3 * * * pgrep -x \"s5\" > /dev/null || ${CRON_S5}") | crontab -
   fi
 fi
