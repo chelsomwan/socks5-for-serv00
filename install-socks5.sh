@@ -110,7 +110,9 @@ install_socks5(){
           fi
       fi
 
-      echo "socks://${SOCKS5_USER}:${SOCKS5_PASS}@${SERV_DOMAIN}:${SOCKS5_PORT}"
+      SOCKS5_URL="socks://${SOCKS5_USER}:${SOCKS5_PASS}@${SERV_DOMAIN}:${SOCKS5_PORT}"
+      echo "$SOCKS5_URL"
+      echo "$SOCKS5_URL" > ~/sock5.txt
     else
       echo "代理创建失败，请检查自己输入的内容。"
     fi
