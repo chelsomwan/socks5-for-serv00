@@ -6,7 +6,7 @@ FILE_PATH="/home/${USER}/.s5"
 CRON_S5="nohup ${FILE_PATH}/s5 -c ${FILE_PATH}/config.json >/dev/null 2>&1 &"
 CRON_NEZHA="nohup ${WORKDIR}/start.sh >/dev/null 2>&1 &"
 PM2_PATH="/home/${USER}/.npm-global/lib/node_modules/pm2/bin/pm2"
-CRON_JOB="59 */3 * * * $PM2_PATH resurrect >> /home/$(whoami)/pm2_resurrect.log 2>&1"
+CRON_JOB="59 */6 * * * $PM2_PATH resurrect >> /home/$(whoami)/pm2_resurrect.log 2>&1"
 REBOOT_COMMAND="@reboot pkill -kill -u $(whoami) && $PM2_PATH resurrect >> /home/$(whoami)/pm2_resurrect.log 2>&1"
 
 echo "检查并添加 crontab 任务"
@@ -27,9 +27,9 @@ else
     (crontab -l | grep -F "* * pgrep -x \"nezha-agent\" > /dev/null || ${CRON_NEZHA}") || (crontab -l; echo "*/12 * * * * pgrep -x \"nezha-agent\" > /dev/null || ${CRON_NEZHA}") | crontab -
   elif [ -e "${FILE_PATH}/config.json" ]; then
     echo "添加 socks5 的 crontab 重启任务"
-    (crontab -l | grep -F "59 */3 * * * $PM2_PATH resurrect >> /home/$(whoami)/pm2_resurrect.log 2>&1") || (crontab -l; echo "59 */3 * * * $PM2_PATH resurrect >> /home/$(whoami)/pm2_resurrect.log 2>&1") | crontab -
+    (crontab -l | grep -F "59 */6 * * * $PM2_PATH resurrect >> /home/$(whoami)/pm2_resurrect.log 2>&1") || (crontab -l; echo "59 */6 * * * $PM2_PATH resurrect >> /home/$(whoami)/pm2_resurrect.log 2>&1") | crontab -
     (crontab -l | grep -F "@reboot $PM2_PATH resurrect >> /home/$(whoami)/pm2_resurrect.log 2>&1") || (crontab -l; echo "@reboot $PM2_PATH resurrect >> /home/$(whoami)/pm2_resurrect.log 2>&1") | crontab -
     (crontab -l | grep -F "@reboot pkill -kill -u $(whoami) && ${CRON_S5}") || (crontab -l; echo "@reboot pkill -kill -u $(whoami) && ${CRON_S5}") | crontab -
-    (crontab -l | grep -F "* * pgrep -x \"s5\" > /dev/null || ${CRON_S5}") || (crontab -l; echo "52 */3 * * * pgrep -x \"s5\" > /dev/null || ${CRON_S5}") | crontab -
+    (crontab -l | grep -F "* * pgrep -x \"s5\" > /dev/null || ${CRON_S5}") || (crontab -l; echo "52 */6 * * * pgrep -x \"s5\" > /dev/null || ${CRON_S5}") | crontab -
   fi
 fi
